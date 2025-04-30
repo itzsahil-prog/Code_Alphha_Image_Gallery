@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Gallery</title>
+    <style>
+    body {
+        font-family: 'Poppins', sans-serif;
+        background: linear-gradient(135deg, #e290c9, #fad0c4, #fbc2eb, #a18cd1, #fbc2eb);
+        background-size: 300% 300%;
+        animation: gradientAnimation 10s ease infinite;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        color: #facff8;
+        text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+    }
+
+    @keyframes gradientAnimation {
+        0% {
+            background-position: 0% 50%;
+        }
+        50% {
+            background-position: 100% 50%;
+        }
+        100% {
+            background-position: 0% 50%;
+        }
+    }
+
+    .gallery-container {
+        text-align: center;
+        width: 90%;
+        max-width: 600px;
+        background: rgba(255, 255, 255, 0.9); /* Soft white with transparency */
+        padding: 20px;
+        border-radius: 15px;
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+        -webkit-backdrop-filter: blur(10px); /* For Safari */
+        backdrop-filter: blur(10px);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .gallery-container:hover {
+        transform: scale(1.02);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+    }
+
+    h1 {
+        margin-bottom: 30px;
+        color: #222;
+        font-size: 2.5rem;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+    }
+
+    .gallery {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 20px;
+    }
+
+    .gallery-item {
+        overflow: hidden;
+        border-radius: 15px;
+        box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+        cursor: pointer;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .gallery-item:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .gallery-item img {
+        width: 100%;
+        height: auto;
+        transition: transform 0.3s ease;
+    }
+
+    .gallery-item:hover img {
+        transform: scale(1.1);
+    }
+
+    .lightbox {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.8);
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+        animation: fadeIn 0.5s ease;
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+        }
+        to {
+            opacity: 1;
+        }
+    }
+
+    .lightbox img {
+        max-width: 90%;
+        max-height: 80%;
+        border-radius: 15px;
+        box-shadow: 0 8px 15px rgba(0, 0, 0, 0.5);
+        animation: zoomIn 0.3s ease;
+        transition: transform 0.3s ease;
+    }
+
+    @keyframes zoomIn {
+        from {
+            transform: scale(0.8);
+        }
+        to {
+            transform: scale(1);
+        }
+    }
+
+    .close-btn {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        font-size: 35px;
+        color: white;
+        cursor: pointer;
+        background: none;
+        border: none;
+        transition: transform 0.3s ease, color 0.3s ease;
+    }
+
+    .close-btn:hover {
+        transform: rotate(90deg);
+        color: #ff6b6b;
+    }
+
+    .nav-btn {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 40px;
+        color: white;
+        background: none;
+        border: none;
+        cursor: pointer;
+        transition: color 0.3s ease, transform 0.3s ease;
+    }
+
+    .nav-btn:hover {
+        color: #ff6b6b;
+        transform: scale(1.2);
+    }
+
+    .prev-btn {
+        left: 20px;
+    }
+
+    .next-btn {
+        right: 20px;
+    }
+
+    .caption {
+        position: absolute;
+        bottom: 20px;
+        color: white;
+        font-size: 18px;
+        text-align: center;
+        width: 100%;
+        text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
+        animation: fadeIn 0.5s ease;
+    }
+
+    .lightbox-actions {
+        position: absolute;
+        bottom: 60px;
+        display: flex;
+        gap: 10px;
+    }
+
+    .lightbox-actions button {
+        padding: 10px 20px;
+        font-size: 16px;
+        color: white;
+        background: #222;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background 0.3s ease;
+    }
+
+    .lightbox-actions button:hover {
+        background: #444;
+    }
+    </style>
+</head>
+<body>
+    <div class="gallery-container">
+        <h1>Radha Krishna Gallery</h1>
+        <div class="gallery">
+            <div class="gallery-item">
+                <img src="image1.jpg" alt="Image 1">
+            </div>
+            <div class="gallery-item">
+                <img src="image2.jpg" alt="Image 2">
+            </div>
+            <div class="gallery-item">
+                <img src="image3.jpg" alt="Image 3">
+            </div>
+            <div class="gallery-item">
+                <img src="image4.jpg" alt="Image 4">
+            </div>
+            <div class="gallery-item">
+                <img src="image5.jpg" alt="Image 5">
+            </div>
+        </div>
+        <div class="lightbox" id="lightbox">
+            <span class="close-btn" id="close-btn">&times;</span>
+            <button class="nav-btn prev-btn" id="prev-btn">&#10094;</button>
+            <img id="lightbox-img" src="" alt="Lightbox Image">
+            <button class="nav-btn next-btn" id="next-btn">&#10095;</button>
+            <div class="caption" id="caption"></div>
+            <div class="lightbox-actions">
+                <button id="download-btn">Download</button>
+                <button id="share-btn">Share</button>
+            </div>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const galleryItems = document.querySelectorAll('.gallery-item img');
+            const lightbox = document.getElementById('lightbox');
+            const lightboxImg = document.getElementById('lightbox-img');
+            const closeBtn = document.getElementById('close-btn');
+            const prevBtn = document.getElementById('prev-btn');
+            const nextBtn = document.getElementById('next-btn');
+            const caption = document.getElementById('caption');
+            const downloadBtn = document.getElementById('download-btn');
+            const shareBtn = document.getElementById('share-btn');
+            let currentIndex = 0;
+
+            const showLightbox = (index) => {
+                lightbox.style.display = 'flex';
+                lightboxImg.src = galleryItems[index].src;
+                caption.textContent = galleryItems[index].alt || 'No caption available';
+                currentIndex = index;
+            };
+
+            galleryItems.forEach((item, index) => {
+                item.addEventListener('click', () => showLightbox(index));
+            });
+
+            closeBtn.addEventListener('click', () => {
+                lightbox.style.display = 'none';
+            });
+
+            lightbox.addEventListener('click', (e) => {
+                if (e.target !== lightboxImg && e.target !== prevBtn && e.target !== nextBtn) {
+                    lightbox.style.display = 'none';
+                }
+            });
+
+            prevBtn.addEventListener('click', () => {
+                currentIndex = (currentIndex - 1 + galleryItems.length) % galleryItems.length;
+                lightboxImg.src = galleryItems[currentIndex].src;
+                caption.textContent = galleryItems[currentIndex].alt || 'No caption available';
+            });
+
+            nextBtn.addEventListener('click', () => {
+                currentIndex = (currentIndex + 1) % galleryItems.length;
+                lightboxImg.src = galleryItems[currentIndex].src;
+                caption.textContent = galleryItems[currentIndex].alt || 'No caption available';
+            });
+
+            downloadBtn.addEventListener('click', () => {
+                const link = document.createElement('a');
+                link.href = lightboxImg.src;
+                link.download = caption.textContent || 'downloaded-image';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            });
+
+            shareBtn.addEventListener('click', async () => {
+                if (navigator.share) {
+                    try {
+                        await navigator.share({
+                            title: 'Check out this image!',
+                            text: caption.textContent || 'Image from the gallery',
+                            url: lightboxImg.src,
+                        });
+                        alert('Image shared successfully!');
+                    } catch (error) {
+                        alert('Error sharing the image.');
+                    }
+                } else {
+                    alert('Sharing is not supported in this browser.');
+                }
+            });
+
+            document.addEventListener('keydown', (e) => {
+                if (lightbox.style.display === 'flex') {
+                    if (e.key === 'ArrowLeft') {
+                        prevBtn.click();
+                    } else if (e.key === 'ArrowRight') {
+                        nextBtn.click();
+                    } else if (e.key === 'Escape') {
+                        lightbox.style.display = 'none';
+                    }
+                }
+            });
+
+            let isZoomed = false;
+            lightboxImg.addEventListener('click', () => {
+                if (isZoomed) {
+                    lightboxImg.style.transform = 'scale(1)';
+                    isZoomed = false;
+                } else {
+                    lightboxImg.style.transform = 'scale(2)';
+                    isZoomed = true;
+                }
+            });
+        });
+    </script>
+</body>
+</html>
