@@ -1,5 +1,5 @@
 # Code_Alphha_Image_Gallery
-Code Alphha Image Gallery is a simple and elegant project designed to showcase images in a gallery format. This project is ideal for developers and users looking for a lightweight, customizable image gallery solution.
+Code Alpha Image Gallery is a simple and elegant project designed to showcase images in a gallery format. This project is ideal for developers and users looking for a lightweight, customizable image gallery solution.
 
 Features
 Responsive Design: Optimized for different screen sizes.
